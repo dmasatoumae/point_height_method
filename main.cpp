@@ -22,71 +22,6 @@ public:
             search_size = grid_size/2;
             soil_volume = estimation_volume();
             save_cloud("save_cloud.ply", save);
-
-            //pcl::PointCloud<pcl::PointXYZ> base_max_points;
-            //pcl::PointCloud<pcl::PointXYZ> soil_max_points;
-            //pcl::PointCloud<pcl::PointXYZ> search_points;
-            //tree_base->setInputCloud(base);
-            //tree_soil->setInputCloud(soil);
-            //pcl::PointXYZ minPt, maxPt;
-            //pcl::getMinMax3D(*base,minPt,maxPt);
-            //pcl::PointXYZ search_point;
-            //int sss=0;int bbb=0;int ccc=0;
-            /*
-            for(search_point.x = minPt.x; search_point.x<maxPt.x; search_point.x+=grid_size){
-                sss++;
-                //std::cout<<"0";
-                for(search_point.y = minPt.y; search_point.y<maxPt.y; search_point.y+=grid_size){
-                    bbb++;
-                    pcl::PointXYZ base_max_point;
-                    pcl::PointXYZ soil_max_point;
-                    bool base_find = false;
-                    bool soil_find = false;
-                    for(search_point.z = minPt.z; search_point.z < maxPt.z; search_point.z += search_size / 2){
-                        
-                        ccc++;
-                        std::vector<int> pointIdxRadiusSearch;
-                        std::vector<float> pointRadiusSquareDistance;
-                        unsigned int max_nn = 1;
-                        search_points.push_back(search_point);
-                        tree_base->radiusSearch(search_point, search_size, pointIdxRadiusSearch, pointRadiusSquareDistance);
-                        if(pointIdxRadiusSearch.size() > 0){
-                            base_find = true;
-                            base_max_point = base->points[pointIdxRadiusSearch[0]];
-                        }
-                    }
-                    if (base_find == true){
-                        base_max_points.push_back(base_max_point);
-                        
-                        for(search_point.z = minPt.z; search_point.z<maxPt.z+3; search_point.z+=search_size/2){
-                            std::vector<int> pointIdxRadiusSearch;
-                            std::vector<float> pointRadiusSquareDistance;
-                            unsigned int max_nn = 1;
-                            tree_soil->radiusSearch(search_point, search_size, pointIdxRadiusSearch, pointRadiusSquareDistance);
-                            if(pointIdxRadiusSearch.size() > 0){
-                                soil_find = true;
-                                soil_max_point = soil->points[pointIdxRadiusSearch[0]];
-                            }
-                        }
-                    
-                    }
-                    
-                    if (soil_find == true){
-                        soil_max_points.push_back(soil_max_point);
-                        double z_difference = soil_max_point.z - base_max_point.z;
-                        soil_volume+=(grid_size*grid_size)*z_difference;
-                    }
-                }
-
-            }
-            
-            std::cout<<sss<<std::endl;
-            std::cout<<bbb<<std::endl;
-            std::cout<<ccc<<std::endl;
-            */
-            //save_cloud("search.ply",search_points);
-            //save_cloud("base_max.ply",base_max_points);
-            //save_cloud("soil_max.ply",soil_max_points);
             std::cout<<"soil_volume = "<<soil_volume<<" m^3"<<std::endl;            
 
         }
@@ -163,7 +98,7 @@ double PointHeightMethod::estimation_volume()
     pcl::PointCloud<pcl::PointXYZ> base_max_points;
     pcl::PointCloud<pcl::PointXYZ> soil_max_points;
     pcl::PointCloud<pcl::PointXYZ> search_points;
-    
+
     pcl::PointXYZ minPt, maxPt;
     pcl::PointXYZ search_point;
     pcl::PointXYZ base_max_point;
